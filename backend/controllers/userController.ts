@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
-import { body } from 'express-validator';
 import asyncHandler from 'express-async-handler';
+import passport from 'passport';
+import { body } from 'express-validator';
 import User from '../models/user';
 
 const createUser = [
@@ -48,4 +49,21 @@ const createUser = [
   }),
 ];
 
-export { createUser };
+const loginUser = [
+  body('username')
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .isAlpha(),
+  body('password')
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .isAlpha(),
+  passport.authenticate('local'),
+  asyncHandler(async (req: Request, res: Response) => {
+    res.status(201).json(req.user);
+  }),
+];
+
+export { createUser, loginUser };
