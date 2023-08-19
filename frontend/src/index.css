@@ -1,0 +1,78 @@
+:root {
+  --g-violet: hsl(283, 16%, 65%);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+button {
+  cursor: pointer;
+}
+
+.flex {
+  display: flex;
+}
+
+.grid {
+  display: grid;
+}
+
+.header,
+.navbar {
+  font-size: 1.5rem;
+  gap: 1em;
+  padding: 0.5em 1em;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.navbar li {
+  list-style: none;
+}
+
+.logout-btn {
+  font-size: 1rem;
+  padding: 0.2em 0.5em;
+}
+
+.signup h1 {
+  text-align: center;
+}
+
+.form {
+  font-size: 1.3rem;
+  gap: 1em;
+  max-width: 30rem;
+  padding: 1em;
+  margin-inline: auto;
+  margin-top: 1rem;
+}
+
+.label {
+  flex-direction: column;
+  gap: 1em;
+}
+
+.input {
+  font-size: inherit;
+  padding: 0.5em;
+  border: none;
+  border-radius: 0.5em;
+  background-color: var(--g-violet);
+}
+
+.submit-btn {
+  padding: 1em;
+}
