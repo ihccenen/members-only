@@ -7,14 +7,14 @@ import { UserContext } from './Router';
 export default function Login() {
   const { login } = useContext(UserContext);
   const [error, setError] = useState('');
-  const username = useInput('');
+  const email = useInput('');
   const password = useInput('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    loginUser(username.value, password.value)
+    loginUser(email.value, password.value)
       .then((user) => {
         login(user);
         navigate('/');
@@ -26,16 +26,16 @@ export default function Login() {
     <div>
       {error && <h1>{error}</h1>}
       <form className="form grid" onSubmit={handleSubmit}>
-        <label className="label flex" htmlFor="username">
-          Username:
+        <label className="label flex" htmlFor="email">
+          Email:
           <input
             className="input"
             type="text"
-            id="username"
-            name="username"
+            id="email"
+            name="email"
             required
-            value={username.value}
-            onChange={username.handleChange}
+            value={email.value}
+            onChange={email.handleChange}
           />
         </label>
         <label className="label flex" htmlFor="password">

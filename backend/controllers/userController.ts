@@ -5,7 +5,17 @@ import { body } from 'express-validator';
 import User from '../models/user';
 
 const createUser = [
-  body('username')
+  body('firstName')
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .isAlpha(),
+  body('lastName')
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .isAlpha(),
+  body('email')
     .trim()
     .isLength({ min: 1 })
     .escape()
@@ -17,17 +27,17 @@ const createUser = [
     .isAlpha(),
 
   asyncHandler(async (req: Request, res: Response) => {
-    const { username, password } = req.body;
+    const { firstName, lastName, email, password } = req.body;
 
-    const userExists = await User.findOne({ username });
+    const userExists = await User.findOne({ email });
 
     if (userExists) {
       res.status(400);
       
-      throw new Error('Username already in use');
+      throw new Error('Email already in use');
     }
 
-    const user = new User({ username, password });
+    const user = new User({ firstName, lastName, email, password });
 
     if (!user) {
       res.status(400);
@@ -37,12 +47,12 @@ const createUser = [
 
     user.save();
 
-    res.status(201).json({ username: user.username, id: user._id});
+    res.status(201).json({ name: user.name, id: user._id});
   }),
 ];
 
 const loginUser = [
-  body('username')
+  body('email')
     .trim()
     .isLength({ min: 1 })
     .escape()
@@ -53,11 +63,11 @@ const loginUser = [
     .escape()
     .isAlpha(),
   passport.authenticate('local'),
-  asyncHandler(async (req: Request, res: Response) => {
-    const user = req.user as any
+  (req: Request, res: Response) => {
+    const user = req.user as any;
 
-    res.status(201).json({ username: user.username, id: user._id });
-  }),
+    res.status(201).json({ name: user.name, id: user._id });
+  },
 ];
 
 export { createUser, loginUser };

@@ -6,13 +6,13 @@ import ErrorPage from './ErrorPage';
 import { createContext, useState } from 'react';
 
 type User = {
-  username: string;
+  name: string;
   _id: string;
   membership: string;
 };
 
 type UserType = {
-  user: { username: string; _id: string } | null;
+  user: User | null;
   login: (user: User) => void;
   logout: () => void;
 };

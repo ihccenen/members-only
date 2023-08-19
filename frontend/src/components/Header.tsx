@@ -23,7 +23,7 @@ export default function Header() {
       )}
       {user && (
         <>
-          <h1>{user.username}</h1>
+          <h1>{user.name}</h1>
           <button className="logout-btn" type="button" onClick={logout}>
             Logout
           </button>

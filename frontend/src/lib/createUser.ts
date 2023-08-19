@@ -1,7 +1,7 @@
-export default async function createUser(username: string, password: string) {
+export default async function createUser(firstName: string, lastName: string, email: string, password: string) {
   const user = await fetch('http://localhost:5000/api/users/', {
     method: 'POST',
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({ firstName, lastName, email, password }),
     headers: { 'Content-Type': 'application/json' },
   });
 

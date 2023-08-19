@@ -29,25 +29,31 @@ app.use(passport.session());
 app.use(morgan('dev'));
 
 passport.use(
-  new LocalStrategy(async (username: string, password: string, done) => {
-    try {
-      const user = await User.findOne({ username });
+  new LocalStrategy(
+    {
+      usernameField: 'email',
+      passwordField: 'password',
+    },
+    async (email: string, password: string, done) => {
+      try {
+        const user = await User.findOne({ email });
 
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username' });
+        if (!user) {
+          return done(null, false, { message: 'Incorrect email' });
+        }
+
+        const match = await user.matchPassword(password);
+
+        if (!match) {
+          return done(null, false, { message: 'Incorrect password' });
+        }
+
+        return done(null, user);
+      } catch (err) {
+        return done(err);
       }
-      
-      const match = await user.matchPassword(password);
-
-      if (!match) {
-        return done(null, false, { message: 'Incorrect password' });
-      }
-
-      return done(null, user);
-    } catch (err) {
-      return done(err);
     }
-  })
+  )
 );
 
 passport.serializeUser(function (user: any, done) {

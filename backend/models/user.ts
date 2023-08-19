@@ -2,27 +2,36 @@ import mongoose, { Model } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 interface IUser {
-  username: string,
-  password: string,
-  membership: string,
+  firstName: string;
+  lastName: string;
+  name: string;
+  email: string;
+  password: string;
+  membership: string;
 }
 
 interface IUserMethods {
   matchPassword(enteredPassword: string): boolean;
 }
 
-type UserModel = Model<IUser, {}, IUserMethods>
+type UserModel = Model<IUser, {}, IUserMethods>;
 
 const { Schema } = mongoose;
 
 const UserSchema = new Schema<IUser, UserModel, IUserMethods>(
   {
-    username: { type: String, required: true, unique: true },
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     membership: { type: String, default: 'none' },
   },
   { timestamps: true }
 );
+
+UserSchema.virtual('name').get(function () {
+  return `${this.firstName} ${this.lastName}`;
+})
 
 UserSchema.method('matchPassword', async function (enteredPassword: string) {
   return await bcrypt.compare(enteredPassword, this.password);
