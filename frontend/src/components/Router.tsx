@@ -4,6 +4,7 @@ import Signup from './Signup';
 import Login from './Login';
 import ErrorPage from './ErrorPage';
 import { createContext, useState } from 'react';
+import logoutUser from '../lib/logoutUser';
 
 type User = {
   name: string;
@@ -42,6 +43,7 @@ export default function Router() {
 
   const logout = () => {
     setUser(null);
+    logoutUser();
     localStorage.removeItem('user');
   };
 

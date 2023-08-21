@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import asyncHandler from 'express-async-handler';
 import passport from 'passport';
 import { body } from 'express-validator';
@@ -33,7 +33,7 @@ const createUser = [
 
     if (userExists) {
       res.status(400);
-      
+
       throw new Error('Email already in use');
     }
 
@@ -47,7 +47,7 @@ const createUser = [
 
     user.save();
 
-    res.status(201).json({ name: user.name, id: user._id});
+    res.status(201).json({ name: user.name, id: user._id });
   }),
 ];
 
@@ -70,4 +70,12 @@ const loginUser = [
   },
 ];
 
-export { createUser, loginUser };
+const logoutUser = (req: Request, res: Response, next: NextFunction) => {
+  req.logOut(function (err) {
+    if (err) return next(err);
+
+    res.status(200).json({ message: 'Logged out successfully' });
+  });
+};
+
+export { createUser, loginUser, logoutUser };
