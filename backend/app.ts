@@ -6,12 +6,12 @@ import passport from 'passport';
 import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
-import bcrypt from 'bcryptjs';
 import { Strategy as LocalStrategy } from 'passport-local';
 import connectDB from './config/db';
 import userRouter from './routes/user';
 import User from './models/user';
 import { errorHandler, notFound } from './middleware/errorMiddleware';
+import messageRouter from './routes/message'
 
 const PORT = process.env.PORT || 5000;
 
@@ -67,6 +67,8 @@ passport.deserializeUser(function (id, done) {
 });
 
 app.use('/api/users', userRouter);
+
+app.use('/api/messages', messageRouter)
 
 app.use(notFound);
 app.use(errorHandler);
