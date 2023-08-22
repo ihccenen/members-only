@@ -21,7 +21,7 @@ export default function Signup() {
       createUser(firstName.value, lastName.value, email.value, password.value)
         .then((user) => {
           login(user);
-          navigate('/');
+          navigate('/messages');
         })
         .catch((err) => setError(err.message));
 
@@ -32,7 +32,7 @@ export default function Signup() {
   };
 
   return (
-    <main className='signup'>
+    <main className="signup">
       {error && <h1>{error}</h1>}
       <form className="form grid" onSubmit={handleSubmit}>
         <label className="label flex" htmlFor="first-name">
