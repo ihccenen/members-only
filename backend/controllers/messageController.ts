@@ -4,20 +4,21 @@ import asyncHandler from 'express-async-handler';
 import { body, validationResult } from 'express-validator';
 
 const getAllMessages = asyncHandler(async (req: Request, res: Response) => {
-  const allMessages = await Message.find();
+  const user = req.user;
+  const messages = await Message.find().populate({
+    path: 'user',
+    select: 'firstName lastName',
+  });
+  const allMessages = user
+    ? messages
+    : messages.map(({ title, message, _id }) => ({ title, message, _id }));
 
   res.status(200).json({ allMessages });
 });
 
 const createMessage = [
-  body('message')
-    .trim()
-    .isLength({ min: 1 })
-    .escape(),
-  body('title')
-    .trim()
-    .isLength({ min: 1 })
-    .escape(),
+  body('title').trim().isLength({ min: 1 }).escape(),
+  body('message').trim().isLength({ min: 1 }).escape(),
   asyncHandler(async (req: Request, res: Response) => {
     const errors = validationResult(req);
 
@@ -34,7 +35,7 @@ const createMessage = [
     const { title, message } = req.body;
     const { id } = user;
 
-    const msg = new Message({ author: id, title, message });
+    const msg = new Message({ user: id, title, message });
 
     msg.save();
 
@@ -56,7 +57,7 @@ const deleteMessage = asyncHandler(async (req: Request, res: Response) => {
 
   const message = await Message.findById(id);
 
-  if (message?.author?.toString() !== userId) {
+  if (message?.user?.toString() !== userId) {
     res.status(400);
 
     throw new Error('Not allowed to delete message');
