@@ -5,7 +5,7 @@ export default function ErrorPage() {
 
   return (
     <main>
-      <h1>{ error.message }</h1>
+      <h2>{ error.message || "Oh no, this route doesn't exist!"}</h2>
       <Link to="/">
         You can go back to the home page by clicking here, though!
       </Link>
