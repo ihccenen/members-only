@@ -11,7 +11,7 @@ import connectDB from './config/db';
 import userRouter from './routes/user';
 import User from './models/user';
 import { errorHandler, notFound } from './middleware/errorMiddleware';
-import messageRouter from './routes/message'
+import messageRouter from './routes/message';
 
 const PORT = process.env.PORT || 5000;
 
@@ -21,7 +21,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin: '*' }));
+app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 app.use(helmet());
 app.use(session({ secret: 'cats', resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
@@ -68,7 +68,7 @@ passport.deserializeUser(function (id, done) {
 
 app.use('/api/users', userRouter);
 
-app.use('/api/messages', messageRouter)
+app.use('/api/messages', messageRouter);
 
 app.use(notFound);
 app.use(errorHandler);
