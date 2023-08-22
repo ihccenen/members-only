@@ -31,7 +31,7 @@ const UserSchema = new Schema<IUser, UserModel, IUserMethods>(
 
 UserSchema.virtual('name').get(function () {
   return `${this.firstName} ${this.lastName}`;
-})
+});
 
 UserSchema.method('matchPassword', async function (enteredPassword: string) {
   return await bcrypt.compare(enteredPassword, this.password);
