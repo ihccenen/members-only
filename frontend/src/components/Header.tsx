@@ -24,6 +24,7 @@ export default function Header() {
       {user && (
         <>
           <h1>{user.name}</h1>
+          {user.membership !== 'member' && <Link to='/membership'>Join the club</Link> }
           <button className="logout-btn" type="button" onClick={logout}>
             Logout
           </button>

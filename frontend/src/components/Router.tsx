@@ -7,6 +7,7 @@ import { createContext, useState } from 'react';
 import logoutUser from '../lib/logoutUser';
 import MessagesList from './MessagesList';
 import { loader as messagesListLoader } from './MessagesList';
+import Membership from './Membership';
 
 type User = {
   name: string;
@@ -41,6 +42,7 @@ export default function Router() {
         },
         { path: 'signup', element: <Signup /> },
         { path: 'login', element: <Login /> },
+        { path: 'membership', element: <Membership /> },
       ],
     },
   ]);
