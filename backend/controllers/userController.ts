@@ -36,13 +36,12 @@ const createUser = [
     req.logIn(user, (err) => {
       if (err) return next(err);
 
-      res
-        .status(201)
-        .json({
-          name: `${user.firstName} ${user.lastName}`,
-          id: user._id,
-          isAdmin: user.isAdmin,
-        });
+      res.status(201).json({
+        name: `${user.firstName} ${user.lastName}`,
+        id: user._id,
+        membership: user.membership,
+        isAdmin: user.isAdmin,
+      });
     });
   }),
 ];
@@ -54,13 +53,12 @@ const loginUser = [
   (req: Request, res: Response) => {
     const user = req.user as any;
 
-    res
-      .status(201)
-      .json({
-        name: `${user.firstName} ${user.lastName}`,
-        id: user._id,
-        isAdmin: user.isAdmin,
-      });
+    res.status(200).json({
+      name: `${user.firstName} ${user.lastName}`,
+      id: user._id,
+      membership: user.membership,
+      isAdmin: user.isAdmin,
+    });
   },
 ];
 
@@ -109,7 +107,12 @@ const updateUserMembership = [
       throw new Error('Failed to update membership');
     }
 
-    res.status(200).json({ message: 'Membership status changed to member' });
+    res.status(200).json({
+      name: `${userDB.firstName} ${userDB.lastName}`,
+      id: userDB._id,
+      membership: userDB.membership,
+      isAdmin: userDB.isAdmin,
+    });
   }),
 ];
 
