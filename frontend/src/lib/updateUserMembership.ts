@@ -1,6 +1,6 @@
 export default async function updateUserMembership(password: string) {
   const update = await fetch(
-    `${import.meta.env.VITE_API_URL}/api/users/log-out/`,
+    `${import.meta.env.VITE_API_URL}/api/users/`,
     {
       method: 'PATCH',
       credentials: 'include',
