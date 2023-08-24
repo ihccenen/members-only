@@ -1,17 +1,19 @@
 import { Request, Response } from 'express';
 import Message from '../models/message';
+import User from '../models/user';
 import asyncHandler from 'express-async-handler';
 import { body, validationResult } from 'express-validator';
 
 const getAllMessages = asyncHandler(async (req: Request, res: Response) => {
-  const user = req.user;
+  const user = req.user as { isAdmin: boolean };
   const messages = await Message.find().populate({
     path: 'user',
     select: 'firstName lastName',
   });
-  const allMessages = user
-    ? messages
-    : messages.map(({ title, message, _id }) => ({ title, message, _id }));
+  const allMessages =
+    user && user.isAdmin
+      ? messages
+      : messages.map(({ title, message, _id }) => ({ title, message, _id }));
 
   res.status(200).json({ allMessages });
 });
@@ -52,16 +54,15 @@ const deleteMessage = asyncHandler(async (req: Request, res: Response) => {
     throw new Error('User not logged');
   }
 
-  const userId = user.id;
-  const { id } = req.params;
+  const { isAdmin } = user;
 
-  const message = await Message.findById(id);
-
-  if (message?.user?.toString() !== userId) {
+  if (!isAdmin) {
     res.status(400);
 
-    throw new Error('Not allowed to delete message');
+    throw new Error('Only admins are allowed to delete messages');
   }
+
+  const { id } = req.params;
 
   await Message.findByIdAndDelete(id);
 
