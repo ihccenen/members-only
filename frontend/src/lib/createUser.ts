@@ -5,7 +5,7 @@ export default async function createUser(
   password: string,
   isAdmin: string
 ) {
-  const user = await fetch('http://localhost:5000/api/users/', {
+  const user = await fetch(`${import.meta.env.VITE_API_URL}/api/users/`, {
     method: 'POST',
     credentials: 'include',
     body: JSON.stringify({
