@@ -17,7 +17,7 @@ export default function Login() {
     loginUser(email.value, password.value)
       .then((user) => {
         login(user);
-        navigate('/messages');
+        navigate(-1);
       })
       .catch((err) => setError(err.message));
   };
