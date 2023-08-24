@@ -1,14 +1,20 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import {
+  Navigate,
+  RouterProvider,
+  createBrowserRouter,
+} from 'react-router-dom';
 import App from '../App';
 import Signup from './Signup';
 import Login from './Login';
 import ErrorPage from './ErrorPage';
 import { createContext, useState } from 'react';
 import logoutUser from '../lib/logoutUser';
+import MessagesList from './MessagesList';
+import { loader as messagesListLoader } from './MessagesList';
 
 type User = {
   name: string;
-  _id: string;
+  id: string;
   membership: string;
 };
 
@@ -30,6 +36,13 @@ export default function Router() {
       element: <App />,
       errorElement: <ErrorPage />,
       children: [
+        { index: true, element: <Navigate to="/messages" /> },
+        {
+          path: 'messages',
+          element: <MessagesList />,
+          loader: messagesListLoader,
+          errorElement: <ErrorPage />,
+        },
         { path: 'signup', element: <Signup /> },
         { path: 'login', element: <Login /> },
       ],
