@@ -1,11 +1,11 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import deleteMessage from '../lib/deleteMessage';
-import { UserContext } from './Router';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
 interface IMessage {
-  user?: { firstName: string; lastName: string; _id: string };
+  user?: { firstName: string; lastName: string };
+
   title: string;
   message: string;
   createdAt: string;
@@ -14,10 +14,11 @@ interface IMessage {
 
 export default function Message({
   message: { user, title, message, createdAt, _id },
+  isAdmin
 }: {
   message: IMessage;
+  isAdmin: boolean 
 }) {
-  const { user: currentUser } = useContext(UserContext);
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -44,7 +45,7 @@ export default function Message({
         </div>
         <p>{moment(createdAt).format('MMM Do YY')}</p>
       </div>
-      {currentUser != null && user?._id === currentUser.id && (
+      {isAdmin && (
         <div>
           {error && <p>{error}</p>}
           <button className="delete-btn" type="button" onClick={handleClick}>
