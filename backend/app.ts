@@ -21,7 +21,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin: 'http://localhost:10000/', credentials: true }));
+app.use(cors({ origin: process.env.ORIGIN, credentials: true }));
 app.use(helmet());
 app.use(session({ secret: 'cats', resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
