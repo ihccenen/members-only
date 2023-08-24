@@ -110,7 +110,7 @@ const updateUserMembership = [
     res.status(200).json({
       name: `${userDB.firstName} ${userDB.lastName}`,
       id: userDB._id,
-      membership: userDB.membership,
+      membership: 'member',
       isAdmin: userDB.isAdmin,
     });
   }),
