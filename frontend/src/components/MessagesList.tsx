@@ -6,7 +6,7 @@ import { UserContext } from './Router';
 import CreateMessage from './CreateMessage';
 
 interface IMessage {
-  user?: { firstName: string; lastName: string; _id: string };
+  user?: { firstName: string; lastName: string };
   title: string;
   message: string;
   createdAt: string;
@@ -18,15 +18,15 @@ export default function MessagesList() {
   const { user } = useContext(UserContext);
 
   return (
-    <main className='main'>
-      <div className='messages-list grid'>
+    <main className="main">
+      <div className="messages-list grid">
         {allMessages.length < 1 ? (
           <h2>No messages</h2>
         ) : (
           <>
             <h2>Messages:</h2>
             {allMessages.map((message) => (
-              <Message key={message._id} message={message} />
+              <Message key={message._id} isAdmin={user?.isAdmin === true} message={message} />
             ))}
           </>
         )}
