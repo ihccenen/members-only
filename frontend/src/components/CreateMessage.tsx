@@ -17,7 +17,7 @@ export default function CreateMessage() {
     e.preventDefault();
 
     createMessage(title.value, message)
-      .then(() => navigate('/messages'))
+      .then(() => navigate('/'))
       .catch((err) => setError(err.message));
   };
 
