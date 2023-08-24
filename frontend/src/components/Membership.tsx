@@ -1,20 +1,21 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import useInput from '../hooks/useInput';
 import updateUserMembership from '../lib/updateUserMembership';
 import { Navigate } from 'react-router-dom';
+import { UserContext } from './Router';
 
 export default function Membership() {
-  const [success, setSuccess] = useState(false);
+  const { user, login } = useContext(UserContext);
   const [error, setError] = useState('');
   const password = useInput('');
 
-  if (success) return <Navigate to="/" />;
+  if (user?.membership === 'member') return <Navigate to="/" />;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     updateUserMembership(password.value)
-      .then(() => setSuccess(true))
+      .then(login)
       .catch((err) => setError(err.message));
   };
 
