@@ -1,8 +1,4 @@
-import {
-  Navigate,
-  RouterProvider,
-  createBrowserRouter,
-} from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import App from '../App';
 import Signup from './Signup';
 import Login from './Login';
@@ -16,6 +12,7 @@ type User = {
   name: string;
   id: string;
   membership: string;
+  isAdmin: boolean;
 };
 
 type UserType = {
@@ -36,9 +33,8 @@ export default function Router() {
       element: <App />,
       errorElement: <ErrorPage />,
       children: [
-        { index: true, element: <Navigate to="/messages" /> },
         {
-          path: 'messages',
+          index: true,
           element: <MessagesList />,
           loader: messagesListLoader,
           errorElement: <ErrorPage />,
