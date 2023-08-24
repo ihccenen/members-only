@@ -100,9 +100,9 @@ export default function Signup() {
             onChange={confirmPassword.handleChange}
           />
         </label>
-        <fieldset>
+        <fieldset className="fieldset grid">
           <legend>Admin:</legend>
-          <label htmlFor="isAdmin">
+          <label className="fieldset-label flex" htmlFor="isAdmin">
             <input
               type="radio"
               name="isAdmin"
@@ -113,7 +113,7 @@ export default function Signup() {
             />
             Yes
           </label>
-          <label htmlFor="notAdmin">
+          <label className="fieldset-label flex" htmlFor="notAdmin">
             <input
               type="radio"
               name="notAdmin"
