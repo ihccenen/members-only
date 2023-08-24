@@ -8,6 +8,7 @@ interface IUser {
   email: string;
   password: string;
   membership: string;
+  isAdmin: boolean;
 }
 
 interface IUserMethods {
@@ -25,6 +26,7 @@ const UserSchema = new Schema<IUser, UserModel, IUserMethods>(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     membership: { type: String, default: 'none' },
+    isAdmin: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
