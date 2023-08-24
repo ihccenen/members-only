@@ -12,16 +12,23 @@ export default function Signup() {
   const email = useInput('');
   const password = useInput('');
   const confirmPassword = useInput('');
+  const isAdmin = useInput('No');
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (password.value === confirmPassword.value) {
-      createUser(firstName.value, lastName.value, email.value, password.value)
+      createUser(
+        firstName.value,
+        lastName.value,
+        email.value,
+        password.value,
+        isAdmin.value
+      )
         .then((user) => {
           login(user);
-          navigate('/messages');
+          navigate(-1);
         })
         .catch((err) => setError(err.message));
 
@@ -95,6 +102,31 @@ export default function Signup() {
             onChange={confirmPassword.handleChange}
           />
         </label>
+        <fieldset>
+          <legend>Admin:</legend>
+          <label htmlFor="isAdmin">
+            <input
+              type="radio"
+              name="isAdmin"
+              id="isAdmin"
+              value="Yes"
+              onChange={isAdmin.handleChange}
+              checked={isAdmin.value === 'Yes'}
+            />
+            Yes
+          </label>
+          <label htmlFor="notAdmin">
+            <input
+              type="radio"
+              name="notAdmin"
+              id="notAdmin"
+              value="No"
+              onChange={isAdmin.handleChange}
+              checked={isAdmin.value === 'No'}
+            />
+            No
+          </label>
+        </fieldset>
         <button className="submit-btn" type="submit">
           Submit
         </button>
