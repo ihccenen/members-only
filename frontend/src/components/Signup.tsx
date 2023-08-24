@@ -32,9 +32,9 @@ export default function Signup() {
   };
 
   return (
-    <main className="signup">
+    <main className="main">
       {error && <h1>{error}</h1>}
-      <form className="form grid" onSubmit={handleSubmit}>
+      <form className="form signup grid" onSubmit={handleSubmit}>
         <label className="label flex" htmlFor="first-name">
           First Name:
           <input

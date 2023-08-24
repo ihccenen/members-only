@@ -23,9 +23,9 @@ export default function Login() {
   };
 
   return (
-    <div>
+    <main className="main">
       {error && <h1>{error}</h1>}
-      <form className="form grid" onSubmit={handleSubmit}>
+      <form className="form login grid" onSubmit={handleSubmit}>
         <label className="label flex" htmlFor="email">
           Email:
           <input
@@ -54,6 +54,6 @@ export default function Login() {
           Submit
         </button>
       </form>
-    </div>
+    </main>
   );
 }
