@@ -1,11 +1,11 @@
 import { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import useInput from '../hooks/useInput';
 import createUser from '../lib/createUser';
 import { UserContext } from './Router';
 
 export default function Signup() {
-  const { login } = useContext(UserContext);
+  const { user, login } = useContext(UserContext);
   const [error, setError] = useState('');
   const firstName = useInput('');
   const lastName = useInput('');
@@ -13,7 +13,8 @@ export default function Signup() {
   const password = useInput('');
   const confirmPassword = useInput('');
   const isAdmin = useInput('No');
-  const navigate = useNavigate();
+
+  if (user) return <Navigate to="/" />;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,10 +27,7 @@ export default function Signup() {
         password.value,
         isAdmin.value
       )
-        .then((user) => {
-          login(user);
-          navigate(-1);
-        })
+        .then(login)
         .catch((err) => setError(err.message));
 
       return;

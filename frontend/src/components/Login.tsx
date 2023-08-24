@@ -1,24 +1,22 @@
 import { useContext, useState } from 'react';
 import useInput from '../hooks/useInput';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import loginUser from '../lib/loginUser';
 import { UserContext } from './Router';
 
 export default function Login() {
-  const { login } = useContext(UserContext);
+  const { user, login } = useContext(UserContext);
   const [error, setError] = useState('');
   const email = useInput('');
   const password = useInput('');
-  const navigate = useNavigate();
+
+  if (user) return <Navigate to="/" />;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     loginUser(email.value, password.value)
-      .then((user) => {
-        login(user);
-        navigate(-1);
-      })
+      .then(login)
       .catch((err) => setError(err.message));
   };
 
