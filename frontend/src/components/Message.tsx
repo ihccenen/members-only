@@ -24,7 +24,7 @@ export default function Message({
 
   const handleClick = () => {
     deleteMessage(_id)
-      .then(() => navigate('/messages'))
+      .then(() => navigate('/'))
       .catch((err) => setError(err.message));
   };
 
